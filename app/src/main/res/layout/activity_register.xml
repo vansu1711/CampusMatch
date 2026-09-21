@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient">
+
+    <!-- Khối Logo nhỏ thu gọn ở góc trên bên phải -->
+    <LinearLayout
+        android:id="@+id/layoutMiniLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Campus Match"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:fontFamily="cursive"
+            android:textStyle="bold|italic"
+            android:layout_marginEnd="6dp"/>
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_campus_logo"
+            android:contentDescription="Mini Logo"/>
+    </LinearLayout>
+
+    <!-- Label Sign Up nằm sát phía bên trái giống Log In -->
+
+    <!-- Username Input -->
+    <TextView
+        android:id="@+id/tvLabelRegisterLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="72dp"
+        android:text="Sign Up"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutMiniLogo" />
+
+    <EditText
+        android:id="@+id/etRegUsername"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Username"
+        android:textColorHint="#80FFFFFF"
+        android:textColor="@android:color/white"
+        android:background="@drawable/bg_edittext"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelRegisterLeft"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
+
+    <!-- Khung bọc New Password chứa mắt ẩn hiện mật khẩu -->
+    <RelativeLayout
+        android:id="@+id/layoutRegPasswordContainer"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_edittext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etRegUsername">
+
+        <EditText
+            android:id="@+id/etRegPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:hint="New password"
+            android:inputType="textPassword"
+            android:paddingStart="16dp"
+            android:paddingEnd="50dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#80FFFFFF"/>
+
+        <ImageView
+            android:id="@+id/ivToggleRegPassword"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:contentDescription="Toggle Password"
+            android:focusable="true"
+            android:src="@drawable/ic_eye_hidden"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RelativeLayout>
+
+    <!-- Khung bọc Confirm Password chứa mắt ẩn hiện mật khẩu -->
+    <RelativeLayout
+        android:id="@+id/layoutRegConfirmPasswordContainer"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_edittext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutRegPasswordContainer">
+
+        <EditText
+            android:id="@+id/etRegConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:hint="Confirm password"
+            android:inputType="textPassword"
+            android:paddingStart="16dp"
+            android:paddingEnd="50dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#80FFFFFF"/>
+
+        <ImageView
+            android:id="@+id/ivToggleRegConfirmPassword"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:contentDescription="Toggle Password"
+            android:focusable="true"
+            android:src="@drawable/ic_eye_hidden"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RelativeLayout>
+
+    <!-- Dòng ô tick xác minh danh tính nằm ngay trên nút Sign Up -->
+    <!-- TODO: Phần xác minh danh tính này sau này người dùng sẽ chỉnh sửa thêm logic nâng cao -->
+    <CheckBox
+        android:id="@+id/cbVerifyIdentity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Xác minh danh tính"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:buttonTint="@android:color/white"
+        android:checked="false"
+        app:layout_constraintTop_toBottomOf="@id/layoutRegConfirmPasswordContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="32dp"/>
+
+    <!-- Sign Up Button -->
+
+    <!-- Quay lại màn hình đăng nhập -->
+    <Button
+        android:id="@+id/btnRegisterSubmit"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/btn_login_selector"
+        android:text="Sign Up"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cbVerifyIdentity" />
+
+    <TextView
+        android:id="@+id/tvBackToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="104dp"
+        android:gravity="center"
+        android:text="Already have an account? Log in."
+        android:textColor="#E6FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegisterSubmit"
+        app:layout_constraintVertical_bias="0.555" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Campus Match</string>
+    <string name="forgot_password">Forgot your login details? <b>Get help signing in.</b></string>
+    <string name="dont_have_account">Don\'t have an account? Sign up.</string>
+</resources>

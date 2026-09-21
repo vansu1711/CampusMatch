@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 1. Hình chiếc nón cử nhân làm khung nền bên ngoài màu Trắng -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,2L1,7l11,5 9,-4.09V14.5h1V7L12,2z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5,10.18v3.64C5,16.5 8.13,19 12,19s7,-2.49 7,-5.18v-3.64l-7,3.18L5,10.18z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M21,7.5v6.5l0.5,0.5 0.5,-0.5V7.5z"/>
+
+    <!-- 2. Hình Trái Tim Tình Yêu được di chuyển vào vị trí CHÍNH GIỮA TÂM của chiếc nón (giao điểm trục dọc 12 và trục ngang 11.5) -->
+    <path
+        android:fillColor="#FF2D55"
+        android:pathData="M12,13.7l-0.54,-0.49C9.54,11.4 8,10.02 8,8.32c0,-1.38 1.08,-2.46 2.46,-2.46 0.78,0 1.53,0.36 2.04,0.93 0.51,-0.57 1.26,-0.93 2.04,-0.93 1.38,0 2.46,1.08 2.46,2.46 0,1.7 -1.54,3.08 -3.46,4.9l-0.54,0.48z"/>
+</vector>
