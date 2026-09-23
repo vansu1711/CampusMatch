@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.CampusMatch" parent="Base.Theme.CampusMatch" />
+
+    <style name="CircleImage" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

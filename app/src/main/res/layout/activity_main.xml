@@ -1,242 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@drawable/bg_gradient">
+    android:background="@color/bg_light">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Fragment Container -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"/>
 
-    <ImageView
-        android:id="@+id/ivAppIcon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="80dp"
-        android:contentDescription="Campus Match Logo"
-        android:src="@drawable/ic_campus_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvLogo"
-        android:layout_width="wrap_content"
+    <!-- Bottom Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="cursive"
-        android:text="Campus Match"
-        android:textColor="@android:color/white"
-        android:textSize="42sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivAppIcon" />
+        android:background="@color/white"
+        app:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/brand_purple"
+        app:itemTextColor="@color/brand_purple"
+        app:labelVisibilityMode="labeled" />
 
-    <!-- Label Log In sát phía bên trái ngay trên Username -->
-    <TextView
-        android:id="@+id/tvLabelLoginLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log In"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tvLogo"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="36dp"/>
-
-    <EditText
-        android:id="@+id/etUsername"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bg_edittext"
-        android:hint="Username"
-        android:inputType="text"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="#80FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLabelLoginLeft" />
-
-    <!-- Khung bọc Password chứa mắt ẩn hiện mật khẩu -->
-    <RelativeLayout
-        android:id="@+id/layoutPasswordContainer"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bg_edittext"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUsername">
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingStart="16dp"
-            android:paddingEnd="50dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="#80FFFFFF"/>
-
-        <ImageView
-            android:id="@+id/ivTogglePassword"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="16dp"
-            android:clickable="true"
-            android:contentDescription="Toggle Password"
-            android:focusable="true"
-            android:src="@drawable/ic_eye_hidden"
-            tools:ignore="TouchTargetSizeCheck" />
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/btn_login_selector"
-        android:text="Log In"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutPasswordContainer" />
-
-    <TextView
-        android:id="@+id/tvForgot"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:gravity="center"
-        android:text="@string/forgot_password"
-        android:textColor="#E6FFFFFF"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
-
-    <LinearLayout
-        android:id="@+id/layoutOr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvForgot">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#80FFFFFF" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:text="OR"
-            android:textColor="@android:color/white"
-            android:textSize="13sp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#80FFFFFF" />
-    </LinearLayout>
-
-    <!-- Social Login Buttons Container - Thay đổi sang dạng các ICON NẰM NGANG, phóng to lên -->
-    <!-- Social Login Buttons Container - Thay đổi sang dạng các ICON NẰM NGANG, phóng to lên -->
-    <LinearLayout
-        android:id="@+id/layoutSocialLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/layoutOr"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp">
-
-        <!-- Facebook Icon Button -->
-        <ImageView
-            android:id="@+id/btnFacebook"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginEnd="24dp"
-            android:clickable="true"
-            android:contentDescription="Facebook Login"
-            android:focusable="true"
-            android:src="@drawable/ic_facebook"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <!-- Google Icon Button -->
-        <ImageView
-            android:id="@+id/btnGoogle"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="24dp"
-            android:clickable="true"
-            android:contentDescription="Google Login"
-            android:focusable="true"
-            android:src="@drawable/ic_google"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <!-- Apple ID Icon Button -->
-        <ImageView
-            android:id="@+id/btnApple"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:clickable="true"
-            android:contentDescription="Apple Login"
-            android:focusable="true"
-            android:src="@drawable/ic_apple"
-            tools:ignore="TouchTargetSizeCheck" />
-    </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:padding="24dp"
-            android:text="@string/dont_have_account"
-            android:textColor="#E6FFFFFF"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.467"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutSocialLogin" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

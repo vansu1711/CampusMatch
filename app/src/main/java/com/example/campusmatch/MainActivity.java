@@ -1,32 +1,29 @@
 package com.example.campusmatch;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-import android.view.View;
-import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import com.example.campusmatch.fragments.ConnectFragment;
+import com.example.campusmatch.fragments.DiscoveryFragment;
+import com.example.campusmatch.fragments.ProfileDetailFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private SessionManager session;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Định dạng text "Don't have an account? Sign up." bằng code Java Spannable để tránh lỗi hiển thị và chuẩn màu sắc
-        TextView tvSignUp = findViewById(R.id.tvSignUp);
-        String text = getString(R.string.dont_have_account);
-        SpannableString ss = new SpannableString(text);
-        SessionManager session = new SessionManager(this);
+        session = new SessionManager(this);
 
+        // Kiểm tra nếu chưa đăng nhập thì chuyển hướng ngay sang LoginActivity
         if (!session.isLoggedIn()) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -34,34 +31,41 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        int startIndex = text.indexOf("Sign up.");
-        if (startIndex != -1) {
-            // Thiết lập màu xanh đậm chuẩn Instagram (#0095F6) cho cụm từ "Sign up."
-            ss.setSpan(new ForegroundColorSpan(Color.parseColor("#0095F6")), startIndex, startIndex + 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            // Thiết lập in đậm cho cụm từ "Sign up."
-            ss.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), startIndex, startIndex + 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        tvSignUp.setText(ss);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-        // Đóng góp lắng nghe sự kiện chuyển trang cho cả màn hình chính
-        tvSignUp.setOnClickListener(new View.OnClickListener() {
+        // Hiển thị Fragment mặc định là Discovery
+        loadFragment(new DiscoveryFragment());
+
+        // Xử lý sự kiện Bottom Navigation chuyển đổi Fragment
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                int id = item.getItemId();
+
+                if (id == R.id.nav_discovery) {
+                    fragment = new DiscoveryFragment(); // Giao diện 1 (Trái)
+                } else if (id == R.id.nav_connect) {
+                    fragment = new ProfileDetailFragment(); // Giao diện 2 (Giữa)
+                } else if (id == R.id.nav_messages) {
+                    fragment = new ConnectFragment(); // Giao diện 3 (Phải)
+                } else if (id == R.id.nav_profile) {
+                    fragment = new DiscoveryFragment();
+                }
+
+                if (fragment != null) {
+                    loadFragment(fragment);
+                    return true;
+                }
+                return false;
             }
         });
+    }
 
-        // Định dạng in đậm chữ "Get help signing in." của dòng tvForgot tại MainActivity
-        TextView tvForgot = findViewById(R.id.tvForgot);
-        if (tvForgot != null) {
-            String forgotText = getString(R.string.forgot_password);
-            SpannableString ssForgot = new SpannableString(forgotText);
-            int helpIndex = forgotText.indexOf("Get help signing in.");
-            if (helpIndex != -1) {
-                ssForgot.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), helpIndex, helpIndex + 20, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            tvForgot.setText(ssForgot);
-        }
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
     }
 }

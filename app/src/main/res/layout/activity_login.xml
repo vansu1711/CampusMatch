@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -103,10 +104,11 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_eye_hidden"
             android:clickable="true"
+            android:contentDescription="Toggle Password"
             android:focusable="true"
-            android:contentDescription="Toggle Password"/>
+            android:src="@drawable/ic_eye_hidden"
+            tools:ignore="TouchTargetSizeCheck" />
     </RelativeLayout>
 
     <!-- Log In Button -->
@@ -194,32 +196,35 @@
             android:id="@+id/btnFacebook"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/ic_facebook"
             android:layout_marginEnd="24dp"
             android:clickable="true"
+            android:contentDescription="Facebook Login"
             android:focusable="true"
-            android:contentDescription="Facebook Login"/>
+            android:src="@drawable/ic_facebook"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <!-- Google Icon Button -->
         <ImageView
             android:id="@+id/btnGoogle"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_google"
             android:layout_marginEnd="24dp"
             android:clickable="true"
+            android:contentDescription="Google Login"
             android:focusable="true"
-            android:contentDescription="Google Login"/>
+            android:src="@drawable/ic_google"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <!-- Apple ID Icon Button -->
         <ImageView
             android:id="@+id/btnApple"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/ic_apple"
             android:clickable="true"
+            android:contentDescription="Apple Login"
             android:focusable="true"
-            android:contentDescription="Apple Login"/>
+            android:src="@drawable/ic_apple"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
     <!-- Sign up -->
