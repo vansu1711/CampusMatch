@@ -209,12 +209,14 @@
                     android:layout_marginTop="4dp"/>
 
                 <LinearLayout
+                    android:id="@+id/layoutInterestsContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="8dp">
 
                     <TextView
+                        android:id="@+id/tvInterest1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="☕ Cà phê"
@@ -225,6 +227,7 @@
                         android:layout_marginEnd="6dp"/>
 
                     <TextView
+                        android:id="@+id/tvInterest2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🎸 Guitar"
@@ -235,6 +238,7 @@
                         android:layout_marginEnd="6dp"/>
 
                     <TextView
+                        android:id="@+id/tvInterest3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="✈️ Du lịch"
@@ -245,6 +249,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvMatchPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="💗 92% hợp nhau"
@@ -270,6 +275,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close"
@@ -277,9 +283,11 @@
             app:backgroundTint="@color/white"
             app:fabSize="normal"
             android:layout_marginEnd="24dp"
-            app:elevation="4dp"/>
+            app:elevation="4dp"
+            android:contentDescription="Pass"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnSuperLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star"
@@ -287,16 +295,19 @@
             app:backgroundTint="@color/white"
             app:fabSize="mini"
             android:layout_marginEnd="24dp"
-            app:elevation="4dp"/>
+            app:elevation="4dp"
+            android:contentDescription="Super Like"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_heart"
             app:tint="@color/white"
             app:backgroundTint="#FF2D55"
             app:fabSize="normal"
-            app:elevation="4dp"/>
+            app:elevation="4dp"
+            android:contentDescription="Like"/>
 
     </LinearLayout>
 

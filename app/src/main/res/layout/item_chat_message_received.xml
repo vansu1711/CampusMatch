@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="bottom|start"
+    android:paddingStart="12dp"
+    android:paddingEnd="60dp"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp">
+
+    <!-- Partner Avatar -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivReceivedAvatar"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/bg_gradient"
+        app:shapeAppearanceOverlay="@style/CircleImage"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        tools:src="@tools:sample/avatars"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="start">
+
+        <!-- Message Bubble -->
+        <TextView
+            android:id="@+id/tvMessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_chat_bubble_received"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="#050505"
+            android:textSize="15sp"
+            android:lineSpacingExtra="2dp"
+            tools:text="Nội dung tin nhắn nhận được"/>
+
+        <TextView
+            android:id="@+id/tvMessageTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="4dp"
+            tools:text="10:00"/>
+    </LinearLayout>
+
+</LinearLayout>

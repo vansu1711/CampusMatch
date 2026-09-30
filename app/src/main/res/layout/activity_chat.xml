@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Messenger Header Bar -->
+    <RelativeLayout
+        android:id="@+id/headerChat"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnChatBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Quay lại"
+            app:tint="#0084FF"/>
+
+        <FrameLayout
+            android:id="@+id/containerAvatar"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_toEndOf="@id/btnChatBack"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivChatAvatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/bg_gradient"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                tools:src="@tools:sample/avatars"/>
+
+            <!-- Messenger Online Green Badge -->
+            <View
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_white_rounded"
+                android:backgroundTint="#31A24C"
+                android:elevation="2dp"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/containerAvatar"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                android:id="@+id/tvChatPartnerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Minh Anh, 20 ✓"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#050505"/>
+
+            <TextView
+                android:id="@+id/tvChatPartnerStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đang hoạt động"
+                android:textSize="12sp"
+                android:textColor="#65676B"/>
+        </LinearLayout>
+
+        <!-- Messenger Right Info Icon -->
+        <ImageView
+            android:id="@+id/btnChatInfo"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_info_circle"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Thông tin"
+            app:tint="#0084FF"/>
+    </RelativeLayout>
+
+    <!-- Chat Messages RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChatMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/headerChat"
+        app:layout_constraintBottom_toTopOf="@id/layoutInputArea"/>
+
+    <!-- Messenger Bottom Input Bar -->
+    <LinearLayout
+        android:id="@+id/layoutInputArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Messenger Action Icons -->
+        <ImageView
+            android:id="@+id/btnGallery"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_gallery"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Gửi ảnh"
+            app:tint="#0084FF"/>
+
+        <ImageView
+            android:id="@+id/btnCamera"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_camera"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Chụp ảnh"
+            app:tint="#0084FF"/>
+
+        <!-- Input Pill -->
+        <EditText
+            android:id="@+id/etMessageInput"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:hint="Nhắn tin..."
+            android:textColorHint="#65676B"
+            android:textColor="#050505"
+            android:background="@drawable/bg_chat_input_pill"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="14sp"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:autofillHints=""/>
+
+        <!-- Send / Like Button -->
+        <ImageView
+            android:id="@+id/btnSendMessage"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_send_messenger"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Gửi"
+            app:tint="#0084FF"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
