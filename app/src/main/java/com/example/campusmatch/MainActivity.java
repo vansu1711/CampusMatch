@@ -6,9 +6,11 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.example.campusmatch.fragments.ConnectFragment;
 import com.example.campusmatch.fragments.DiscoveryFragment;
-import com.example.campusmatch.fragments.ProfileDetailFragment;
+import com.example.campusmatch.fragments.MessagesFragment;
+import com.example.campusmatch.fragments.MyProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_discovery) {
-                    fragment = new DiscoveryFragment(); // Giao diện 1 (Trái)
-                } else if (id == R.id.nav_connect) {
-                    fragment = new ProfileDetailFragment(); // Giao diện 2 (Giữa)
-                } else if (id == R.id.nav_messages) {
-                    fragment = new ConnectFragment(); // Giao diện 3 (Phải)
-                } else if (id == R.id.nav_profile) {
                     fragment = new DiscoveryFragment();
+                } else if (id == R.id.nav_connect) {
+                    fragment = new ConnectFragment(); // Ai đã thích bạn / Super Like
+                } else if (id == R.id.nav_messages) {
+                    fragment = new MessagesFragment(); // Tin nhắn & Matches
+                } else if (id == R.id.nav_profile) {
+                    fragment = new MyProfileFragment(); // Hồ sơ cá nhân của tôi
                 }
 
                 if (fragment != null) {

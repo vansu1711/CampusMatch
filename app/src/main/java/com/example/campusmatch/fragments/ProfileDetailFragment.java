@@ -19,6 +19,8 @@ import com.example.campusmatch.R;
 import com.example.campusmatch.data.MockDataProvider;
 import com.example.campusmatch.models.UserProfile;
 
+import java.util.List;
+
 public class ProfileDetailFragment extends Fragment {
 
     private static final String ARG_PROFILE = "arg_user_profile";
@@ -28,6 +30,11 @@ public class ProfileDetailFragment extends Fragment {
     private ImageView btnBack, ivDetailImage;
     private TextView tvDetailName, tvDetailMajor, tvBio, labelInterests, labelActivity;
     private Button btnSendLove;
+
+    private View detailIndicatorBar1, detailIndicatorBar2, detailIndicatorBar3;
+    private View viewDetailTapLeft, viewDetailTapRight;
+
+    private int currentPhotoIndex = 0;
 
     public static ProfileDetailFragment newInstance(UserProfile profile) {
         ProfileDetailFragment fragment = new ProfileDetailFragment();
@@ -63,6 +70,13 @@ public class ProfileDetailFragment extends Fragment {
         labelActivity = view.findViewById(R.id.labelActivity);
         btnSendLove = view.findViewById(R.id.btnSendLove);
 
+        detailIndicatorBar1 = view.findViewById(R.id.detailIndicatorBar1);
+        detailIndicatorBar2 = view.findViewById(R.id.detailIndicatorBar2);
+        detailIndicatorBar3 = view.findViewById(R.id.detailIndicatorBar3);
+
+        viewDetailTapLeft = view.findViewById(R.id.viewDetailTapLeft);
+        viewDetailTapRight = view.findViewById(R.id.viewDetailTapRight);
+
         bindProfileData();
 
         btnBack.setOnClickListener(v -> {
@@ -74,11 +88,13 @@ public class ProfileDetailFragment extends Fragment {
         btnSendLove.setOnClickListener(v -> {
             Toast.makeText(getContext(), "💖 Bạn đã gửi lời thích đến " + profile.getName() + "!", Toast.LENGTH_SHORT).show();
 
-            // Open chat screen with this profile
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtra(ChatActivity.EXTRA_PARTNER_PROFILE, profile);
             startActivity(intent);
         });
+
+        viewDetailTapLeft.setOnClickListener(v -> previousPhoto());
+        viewDetailTapRight.setOnClickListener(v -> nextPhoto());
 
         return view;
     }
@@ -86,10 +102,11 @@ public class ProfileDetailFragment extends Fragment {
     private void bindProfileData() {
         if (profile == null) return;
 
+        currentPhotoIndex = 0;
+
         tvDetailName.setText(profile.getFormattedNameAge());
         tvDetailMajor.setText("🏢 " + profile.getMajor() + " (" + profile.getSchool() + ")");
         tvBio.setText(profile.getBio());
-        ivDetailImage.setImageResource(profile.getAvatarDrawableRes());
 
         if (profile.getInterests() != null && !profile.getInterests().isEmpty()) {
             StringBuilder sb = new StringBuilder("💜 Sở thích chung: ");
@@ -100,5 +117,40 @@ public class ProfileDetailFragment extends Fragment {
         }
 
         labelActivity.setText("🎓 Hoạt động ở trường: CLB Âm nhạc, Đội Tình nguyện " + profile.getSchool());
+
+        updatePhotoDisplay();
+    }
+
+    private void updatePhotoDisplay() {
+        if (profile == null) return;
+
+        List<Integer> photos = profile.getPhotoDrawableResList();
+        if (photos != null && !photos.isEmpty()) {
+            if (currentPhotoIndex >= photos.size()) currentPhotoIndex = photos.size() - 1;
+            if (currentPhotoIndex < 0) currentPhotoIndex = 0;
+
+            ivDetailImage.setImageResource(photos.get(currentPhotoIndex));
+
+            detailIndicatorBar1.setAlpha(currentPhotoIndex == 0 ? 1.0f : 0.35f);
+            detailIndicatorBar2.setAlpha(currentPhotoIndex == 1 ? 1.0f : 0.35f);
+            detailIndicatorBar3.setAlpha(currentPhotoIndex >= 2 ? 1.0f : 0.35f);
+        }
+    }
+
+    private void previousPhoto() {
+        if (currentPhotoIndex > 0) {
+            currentPhotoIndex--;
+            updatePhotoDisplay();
+        }
+    }
+
+    private void nextPhoto() {
+        if (profile == null) return;
+
+        List<Integer> photos = profile.getPhotoDrawableResList();
+        if (photos != null && currentPhotoIndex < photos.size() - 1) {
+            currentPhotoIndex++;
+            updatePhotoDisplay();
+        }
     }
 }

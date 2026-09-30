@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardPendingLike"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="14dp"
+        android:gravity="center_vertical">
+
+        <!-- User Avatar -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivPendingAvatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/bg_gradient"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="@color/brand_purple"
+            app:strokeWidth="2dp"
+            tools:src="@tools:sample/avatars"/>
+
+        <!-- User Info Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="14dp">
+
+            <!-- SuperLike or Like Badge -->
+            <TextView
+                android:id="@+id/tvBadgeType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⭐ Super Like cho bạn"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#FF9500"
+                android:background="@drawable/bg_white_trans_rounded"
+                android:backgroundTint="#FFF2D6"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"/>
+
+            <TextView
+                android:id="@+id/tvPendingNameAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Minh Anh, 20 ✓"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/tvPendingMajorSchool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏢 Bách Khoa - 📍 Thủ Đức"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tvPendingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 phút trước"
+                android:textSize="10sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <!-- Action Buttons (Pass & Like Back) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginStart="8dp">
+
+            <!-- Pass Button -->
+            <ImageView
+                android:id="@+id/btnPendingPass"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_close"
+                android:background="@drawable/bg_white_rounded"
+                android:padding="8dp"
+                android:elevation="2dp"
+                app:tint="#FF3B30"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Bỏ qua"/>
+
+            <!-- Like Back / Match Button -->
+            <ImageView
+                android:id="@+id/btnPendingLikeBack"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/ic_heart"
+                android:background="@drawable/bg_brand_gradient"
+                android:padding="10dp"
+                android:elevation="3dp"
+                app:tint="@color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Thích lại"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

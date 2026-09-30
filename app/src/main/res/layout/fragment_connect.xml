@@ -11,17 +11,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="80dp">
+        android:paddingBottom="100dp">
 
-        <!-- Top Glow Background -->
+        <!-- Header Background Glow -->
         <View
+            android:id="@+id/viewConnectHeaderGlow"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:background="@drawable/bg_brand_gradient"
-            android:alpha="0.15"
+            android:alpha="0.1"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <!-- App Header -->
+        <!-- Header Bar -->
         <ImageView
             android:id="@+id/ivHeaderLogo"
             android:layout_width="32dp"
@@ -45,171 +46,81 @@
             app:layout_constraintBottom_toBottomOf="@id/ivHeaderLogo"
             app:layout_constraintStart_toEndOf="@id/ivHeaderLogo"/>
 
-        <!-- Match Title -->
+        <!-- Title -->
         <TextView
-            android:id="@+id/tvMatchTitle"
+            android:id="@+id/tvConnectTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="It\'s a Match!"
-            android:textColor="@color/brand_purple"
-            android:textSize="36sp"
-            android:fontFamily="cursive"
-            android:textStyle="bold"
-            android:layout_marginTop="40dp"
-            app:layout_constraintTop_toBottomOf="@id/ivHeaderLogo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- Circular Avatars with Heart -->
-        <LinearLayout
-            android:id="@+id/layoutAvatars"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/tvMatchTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/bg_gradient"
-                app:shapeAppearanceOverlay="@style/CircleImage"
-                android:padding="2dp"
-                app:strokeColor="@color/brand_purple"
-                app:strokeWidth="2dp"
-                tools:src="@tools:sample/avatars"/>
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_heart"
-                app:tint="#FF2D55"
-                android:layout_marginStart="-10dp"
-                android:layout_marginEnd="-10dp"
-                android:elevation="4dp"/>
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/bg_gradient"
-                app:shapeAppearanceOverlay="@style/CircleImage"
-                android:padding="2dp"
-                app:strokeColor="@color/brand_pink"
-                app:strokeWidth="2dp"
-                tools:src="@tools:sample/avatars"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvCommonInterest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hai bạn cùng thích\n☕ cà phê và âm nhạc 🎵"
-            android:gravity="center"
+            android:text="Ai đã thích bạn 💕"
             android:textColor="@color/text_primary"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/layoutAvatars"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- Start Conversation Button -->
-        <Button
-            android:id="@+id/btnStartChat"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:text="💬 Bắt đầu trò chuyện"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:background="@drawable/bg_brand_gradient"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            app:layout_constraintTop_toBottomOf="@id/tvCommonInterest"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- Suggestion Section -->
-        <TextView
-            android:id="@+id/tvLabelSuggest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="📍 Gợi ý bắt chuyện"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginTop="32dp"
             android:layout_marginStart="20dp"
-            app:layout_constraintTop_toBottomOf="@id/btnStartChat"
+            app:layout_constraintTop_toBottomOf="@id/ivHeaderLogo"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <TextView
+            android:id="@+id/tvConnectSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bấm 'Thích lại' để Match ngay, hoặc chạm vào để xem thông tin chi tiết hồ sơ!"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tvConnectTitle"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Empty State View -->
         <LinearLayout
-            android:id="@+id/layoutSuggestions"
+            android:id="@+id/layoutNoPendingLikes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintTop_toBottomOf="@id/tvLabelSuggest">
+            android:gravity="center"
+            android:padding="40dp"
+            android:visibility="gone"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@id/tvConnectSubtitle">
 
             <TextView
-                android:id="@+id/tvSuggest1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="☕ Bạn thường học ở thư viện nào?"
-                android:background="@drawable/bg_white_rounded"
-                android:padding="16dp"
-                android:layout_marginBottom="8dp"
-                android:elevation="1dp"
-                android:textSize="13sp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"/>
+                android:text="💌"
+                android:textSize="48sp"/>
 
             <TextView
-                android:id="@+id/tvSuggest2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🎵 Cuối tuần đi cà phê không?"
-                android:background="@drawable/bg_white_rounded"
-                android:padding="16dp"
-                android:elevation="1dp"
+                android:text="Chưa có lượt thích mới"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hãy tích cực quẹt thẻ ở mục Khám phá để kết nối được nhiều bạn sinh viên hơn nhé!"
+                android:textColor="@color/text_secondary"
                 android:textSize="13sp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"/>
+                android:gravity="center"
+                android:layout_marginTop="6dp"/>
         </LinearLayout>
 
-        <!-- Recent Messages Section -->
-        <TextView
-            android:id="@+id/tvLabelRecent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="💬 Tin nhắn gần đây"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintTop_toBottomOf="@id/layoutSuggestions"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <!-- Recent Message RecyclerView -->
+        <!-- Pending Likes RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRecentConversations"
+            android:id="@+id/rvPendingLikes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/tvLabelRecent"/>
+            app:layout_constraintTop_toBottomOf="@id/tvConnectSubtitle"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
