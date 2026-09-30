@@ -3,9 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="brand_purple">#7C3AED</color>
-    <color name="brand_pink">#F472B6</color>
-    <color name="bg_light">#FAFAFA</color>
-    <color name="text_primary">#1F2937</color>
+    <color name="brand_purple_dark">#4C1D95</color>
+    <color name="brand_pink">#EC4899</color>
+    <color name="brand_pink_light">#FCE7F3</color>
+    <color name="brand_blue">#3B82F6</color>
+    <color name="bg_light">#F8FAFC</color>
+    <color name="text_primary">#1E1B4B</color>
     <color name="text_secondary">#6B7280</color>
-    <color name="accent_blue">#3B82F6</color>
+    <color name="accent_yellow">#F59E0B</color>
+    <color name="accent_red">#EF4444</color>
 </resources>
