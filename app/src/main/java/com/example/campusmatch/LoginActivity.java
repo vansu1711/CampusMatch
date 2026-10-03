@@ -101,9 +101,13 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Thực hiện kiểm tra thông tin nhập vào (hỗ trợ cả tài khoản vừa đăng ký tĩnh)
+                // Lưu phiên đăng nhập
                 SessionManager session = new SessionManager(LoginActivity.this);
                 session.createLoginSession(username);
+
+                // Lưu tài khoản vào DB nếu chưa tồn tại
+                com.example.campusmatch.data.CampusMatchDbHelper dbHelper = new com.example.campusmatch.data.CampusMatchDbHelper(LoginActivity.this);
+                dbHelper.registerUser(username, password);
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);

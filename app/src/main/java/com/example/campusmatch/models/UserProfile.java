@@ -16,6 +16,8 @@ public class UserProfile implements Serializable {
     private int matchPercentage;
     private int avatarDrawableRes;
     private List<Integer> photoDrawableResList;
+    private String customAvatarUri;
+    private List<String> customPhotoUriList;
     private boolean isVerified;
 
     public UserProfile() {
@@ -128,6 +130,22 @@ public class UserProfile implements Serializable {
 
     public void setAvatarDrawableRes(int avatarDrawableRes) {
         this.avatarDrawableRes = avatarDrawableRes;
+    }
+
+    public String getCustomAvatarUri() {
+        return customAvatarUri;
+    }
+
+    public void setCustomAvatarUri(String customAvatarUri) {
+        this.customAvatarUri = customAvatarUri;
+    }
+
+    public List<String> getCustomPhotoUriList() {
+        return customPhotoUriList;
+    }
+
+    public void setCustomPhotoUriList(List<String> customPhotoUriList) {
+        this.customPhotoUriList = customPhotoUriList;
     }
 
     public List<Integer> getPhotoDrawableResList() {

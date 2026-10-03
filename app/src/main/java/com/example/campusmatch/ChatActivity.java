@@ -7,15 +7,14 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.campusmatch.adapters.ChatMessageAdapter;
+import com.example.campusmatch.data.CampusMatchDbHelper;
 import com.example.campusmatch.data.MockDataProvider;
-import com.example.campusmatch.fragments.ProfileDetailFragment;
 import com.example.campusmatch.models.ChatMessage;
 import com.example.campusmatch.models.UserProfile;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -38,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private ChatMessageAdapter chatAdapter;
     private UserProfile partnerProfile;
+    private CampusMatchDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,8 @@ public class ChatActivity extends AppCompatActivity {
         btnCamera = findViewById(R.id.btnCamera);
         btnSendMessage = findViewById(R.id.btnSendMessage);
 
+        dbHelper = new CampusMatchDbHelper(this);
+
         btnChatBack.setOnClickListener(v -> finish());
 
         // Get passed Profile
@@ -68,22 +70,8 @@ public class ChatActivity extends AppCompatActivity {
         tvChatPartnerName.setText(partnerProfile.getFormattedNameAge());
         ivChatAvatar.setImageResource(partnerProfile.getAvatarDrawableRes());
 
-        // Info button click -> Show Toast
-        btnChatInfo.setOnClickListener(v -> 
-            Toast.makeText(this, "Thông tin người dùng: " + partnerProfile.getSchool(), Toast.LENGTH_SHORT).show()
-        );
-
-        // Gallery / Camera button clicks
-        btnGallery.setOnClickListener(v -> 
-            Toast.makeText(this, "Chọn hình ảnh từ thiết bị", Toast.LENGTH_SHORT).show()
-        );
-
-        btnCamera.setOnClickListener(v -> 
-            Toast.makeText(this, "Mở camera chụp ảnh", Toast.LENGTH_SHORT).show()
-        );
-
-        // Load chat history with partner avatar
-        List<ChatMessage> chatMessages = MockDataProvider.getSampleChatMessages(partnerProfile.getName());
+        // Load chat history from SQLite Database!
+        List<ChatMessage> chatMessages = dbHelper.getChatHistory(partnerProfile.getName());
         chatAdapter = new ChatMessageAdapter(chatMessages, partnerProfile.getAvatarDrawableRes());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -131,11 +119,14 @@ public class ChatActivity extends AppCompatActivity {
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
         if (TextUtils.isEmpty(text)) {
-            // Send Like icon 👍 if input is empty like Messenger
             text = "👍";
         }
 
         ChatMessage message = new ChatMessage("msg_" + System.currentTimeMillis(), "me", text, currentTime, true);
+        
+        // Save message to SQLite Database
+        dbHelper.saveChatMessage(partnerProfile.getName(), message);
+        
         chatAdapter.addMessage(message);
 
         etMessageInput.setText("");

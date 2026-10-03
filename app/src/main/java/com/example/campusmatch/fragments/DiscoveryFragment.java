@@ -1,6 +1,7 @@
 package com.example.campusmatch.fragments;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.campusmatch.NotificationActivity;
 import com.example.campusmatch.R;
 import com.example.campusmatch.data.MockDataProvider;
 import com.example.campusmatch.models.UserProfile;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +28,12 @@ import java.util.List;
 public class DiscoveryFragment extends Fragment {
 
     private MaterialCardView cardProfile;
-    private ImageView ivProfile, ivBell, btnFilter;
-    private TextView tvProfileName, tvProfileMajor, tvProfileLocation, tvMatchPercent;
-    private TextView tvInterest1, tvInterest2, tvInterest3;
-    private TextView chipInterest, chipLocation, chipAge;
-    private FloatingActionButton btnPass, btnSuperLike, btnLike;
+    private ImageView ivProfile, btnFilter, btnHeaderBack;
+    private TextView tvProfileName, tvProfileMajor;
 
     private View indicatorBar1, indicatorBar2, indicatorBar3;
     private View viewTapLeft, viewTapRight;
-
-    private LinearLayout layoutEmptyState;
+    private LinearLayout layoutMinimalInfo, layoutEmptyState;
     private Button btnResetFilter;
 
     private List<UserProfile> allProfiles;
@@ -56,15 +53,11 @@ public class DiscoveryFragment extends Fragment {
 
         cardProfile = view.findViewById(R.id.cardProfile);
         ivProfile = view.findViewById(R.id.ivProfile);
-        ivBell = view.findViewById(R.id.ivBell);
         btnFilter = view.findViewById(R.id.btnFilter);
+        btnHeaderBack = view.findViewById(R.id.btnHeaderBack);
+
         tvProfileName = view.findViewById(R.id.tvProfileName);
         tvProfileMajor = view.findViewById(R.id.tvProfileMajor);
-        tvProfileLocation = view.findViewById(R.id.tvProfileLocation);
-        tvMatchPercent = view.findViewById(R.id.tvMatchPercent);
-        tvInterest1 = view.findViewById(R.id.tvInterest1);
-        tvInterest2 = view.findViewById(R.id.tvInterest2);
-        tvInterest3 = view.findViewById(R.id.tvInterest3);
 
         indicatorBar1 = view.findViewById(R.id.indicatorBar1);
         indicatorBar2 = view.findViewById(R.id.indicatorBar2);
@@ -73,43 +66,33 @@ public class DiscoveryFragment extends Fragment {
         viewTapLeft = view.findViewById(R.id.viewTapLeft);
         viewTapRight = view.findViewById(R.id.viewTapRight);
 
-        chipInterest = view.findViewById(R.id.chipInterest);
-        chipLocation = view.findViewById(R.id.chipLocation);
-        chipAge = view.findViewById(R.id.chipAge);
-
+        layoutMinimalInfo = view.findViewById(R.id.layoutMinimalInfo);
         layoutEmptyState = view.findViewById(R.id.layoutEmptyState);
         btnResetFilter = view.findViewById(R.id.btnResetFilter);
-
-        btnPass = view.findViewById(R.id.btnPass);
-        btnSuperLike = view.findViewById(R.id.btnSuperLike);
-        btnLike = view.findViewById(R.id.btnLike);
 
         allProfiles = MockDataProvider.getSampleProfiles();
         filteredProfiles = new ArrayList<>(allProfiles);
 
         displayCurrentProfile();
 
-        btnPass.setOnClickListener(v -> passProfile());
-        btnSuperLike.setOnClickListener(v -> superLikeProfile());
-        btnLike.setOnClickListener(v -> likeProfile());
+        if (btnFilter != null) btnFilter.setOnClickListener(v -> showFilterDialog());
 
-        btnFilter.setOnClickListener(v -> showFilterDialog());
-        chipInterest.setOnClickListener(v -> showInterestFilterPicker());
-        chipLocation.setOnClickListener(v -> showLocationFilterPicker());
-        chipAge.setOnClickListener(v -> showAgeFilterPicker());
+        if (btnResetFilter != null) btnResetFilter.setOnClickListener(v -> resetFilters());
 
-        btnResetFilter.setOnClickListener(v -> resetFilters());
+        if (viewTapLeft != null) viewTapLeft.setOnClickListener(v -> previousPhoto());
+        if (viewTapRight != null) viewTapRight.setOnClickListener(v -> nextPhotoOrDetail());
 
-        viewTapLeft.setOnClickListener(v -> previousPhoto());
-        viewTapRight.setOnClickListener(v -> nextPhotoOrDetail());
+        if (cardProfile != null) cardProfile.setOnClickListener(v -> openProfileDetail());
+        if (layoutMinimalInfo != null) layoutMinimalInfo.setOnClickListener(v -> openProfileDetail());
 
-        tvProfileName.setOnClickListener(v -> openProfileDetail());
-        tvProfileMajor.setOnClickListener(v -> openProfileDetail());
+        if (tvProfileName != null) tvProfileName.setOnClickListener(v -> openProfileDetail());
+        if (tvProfileMajor != null) tvProfileMajor.setOnClickListener(v -> openProfileDetail());
 
-        if (ivBell != null) {
-            ivBell.setOnClickListener(v -> 
-                Toast.makeText(getContext(), "Bạn có 2 lượt tương tác mới!", Toast.LENGTH_SHORT).show()
-            );
+        if (btnHeaderBack != null) {
+            btnHeaderBack.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            });
         }
 
         return view;
@@ -160,17 +143,6 @@ public class DiscoveryFragment extends Fragment {
         selectedLocation = "Tất cả";
         selectedAgeRange = "Tất cả";
 
-        chipInterest.setText("🎸 Sở thích");
-        chipLocation.setText("📍 Nơi ở");
-        chipAge.setText("🎂 Độ tuổi");
-
-        chipInterest.setBackgroundResource(R.drawable.bg_chip_selected);
-        chipInterest.setTextColor(getResources().getColor(R.color.white, null));
-        chipLocation.setBackgroundResource(R.drawable.bg_chip_unselected);
-        chipLocation.setTextColor(getResources().getColor(R.color.text_secondary, null));
-        chipAge.setBackgroundResource(R.drawable.bg_chip_unselected);
-        chipAge.setTextColor(getResources().getColor(R.color.text_secondary, null));
-
         applyFilters();
         Toast.makeText(getContext(), "Đã đặt lại bộ lọc", Toast.LENGTH_SHORT).show();
     }
@@ -194,9 +166,6 @@ public class DiscoveryFragment extends Fragment {
         builder.setTitle("🎸 Chọn Sở thích");
         builder.setItems(interests, (dialog, which) -> {
             selectedInterest = interests[which];
-            chipInterest.setText(selectedInterest.equals("Tất cả") ? "🎸 Sở thích" : "🎸 " + selectedInterest);
-            chipInterest.setBackgroundResource(!selectedInterest.equals("Tất cả") ? R.drawable.bg_chip_selected : R.drawable.bg_chip_unselected);
-            chipInterest.setTextColor(getResources().getColor(!selectedInterest.equals("Tất cả") ? R.color.white : R.color.text_secondary, null));
             applyFilters();
         });
         builder.show();
@@ -208,9 +177,6 @@ public class DiscoveryFragment extends Fragment {
         builder.setTitle("📍 Chọn Nơi ở");
         builder.setItems(locations, (dialog, which) -> {
             selectedLocation = locations[which];
-            chipLocation.setText(selectedLocation.equals("Tất cả") ? "📍 Nơi ở" : "📍 " + selectedLocation);
-            chipLocation.setBackgroundResource(!selectedLocation.equals("Tất cả") ? R.drawable.bg_chip_selected : R.drawable.bg_chip_unselected);
-            chipLocation.setTextColor(getResources().getColor(!selectedLocation.equals("Tất cả") ? R.color.white : R.color.text_secondary, null));
             applyFilters();
         });
         builder.show();
@@ -222,9 +188,6 @@ public class DiscoveryFragment extends Fragment {
         builder.setTitle("🎂 Chọn Độ tuổi");
         builder.setItems(ages, (dialog, which) -> {
             selectedAgeRange = ages[which];
-            chipAge.setText(selectedAgeRange.equals("Tất cả") ? "🎂 Độ tuổi" : "🎂 " + selectedAgeRange);
-            chipAge.setBackgroundResource(!selectedAgeRange.equals("Tất cả") ? R.drawable.bg_chip_selected : R.drawable.bg_chip_unselected);
-            chipAge.setTextColor(getResources().getColor(!selectedAgeRange.equals("Tất cả") ? R.color.white : R.color.text_secondary, null));
             applyFilters();
         });
         builder.show();
@@ -232,13 +195,15 @@ public class DiscoveryFragment extends Fragment {
 
     private void displayCurrentProfile() {
         if (filteredProfiles == null || filteredProfiles.isEmpty()) {
-            cardProfile.setVisibility(View.GONE);
-            layoutEmptyState.setVisibility(View.VISIBLE);
+            if (cardProfile != null) cardProfile.setVisibility(View.GONE);
+            if (layoutMinimalInfo != null) layoutMinimalInfo.setVisibility(View.GONE);
+            if (layoutEmptyState != null) layoutEmptyState.setVisibility(View.VISIBLE);
             return;
         }
 
-        cardProfile.setVisibility(View.VISIBLE);
-        layoutEmptyState.setVisibility(View.GONE);
+        if (cardProfile != null) cardProfile.setVisibility(View.VISIBLE);
+        if (layoutMinimalInfo != null) layoutMinimalInfo.setVisibility(View.VISIBLE);
+        if (layoutEmptyState != null) layoutEmptyState.setVisibility(View.GONE);
 
         if (currentProfileIndex >= filteredProfiles.size()) {
             currentProfileIndex = 0; // Loop
@@ -247,25 +212,8 @@ public class DiscoveryFragment extends Fragment {
         UserProfile profile = filteredProfiles.get(currentProfileIndex);
         currentPhotoIndex = 0;
 
-        tvProfileName.setText(profile.getFormattedNameAge());
-        tvProfileMajor.setText(profile.getMajor() + " - " + profile.getSchool());
-        tvProfileLocation.setText("📍 " + profile.getLocation());
-        tvMatchPercent.setText("💗 " + profile.getMatchPercentage() + "% hợp nhau");
-
-        List<String> interests = profile.getInterests();
-        if (interests != null && interests.size() >= 3) {
-            tvInterest1.setText(interests.get(0));
-            tvInterest2.setText(interests.get(1));
-            tvInterest3.setText(interests.get(2));
-            tvInterest1.setVisibility(View.VISIBLE);
-            tvInterest2.setVisibility(View.VISIBLE);
-            tvInterest3.setVisibility(View.VISIBLE);
-        } else if (interests != null && !interests.isEmpty()) {
-            tvInterest1.setText(interests.get(0));
-            tvInterest1.setVisibility(View.VISIBLE);
-            tvInterest2.setVisibility(View.GONE);
-            tvInterest3.setVisibility(View.GONE);
-        }
+        if (tvProfileName != null) tvProfileName.setText(profile.getFormattedNameAge());
+        if (tvProfileMajor != null) tvProfileMajor.setText("🏢 " + profile.getMajor() + " (" + profile.getSchool() + ")");
 
         updatePhotoDisplay();
     }
@@ -276,16 +224,16 @@ public class DiscoveryFragment extends Fragment {
         UserProfile profile = filteredProfiles.get(currentProfileIndex % filteredProfiles.size());
         List<Integer> photos = profile.getPhotoDrawableResList();
 
-        if (photos != null && !photos.isEmpty()) {
+        if (photos != null && !photos.isEmpty() && ivProfile != null) {
             if (currentPhotoIndex >= photos.size()) currentPhotoIndex = photos.size() - 1;
             if (currentPhotoIndex < 0) currentPhotoIndex = 0;
 
             ivProfile.setImageResource(photos.get(currentPhotoIndex));
 
             // Update top progress indicators (alpha)
-            indicatorBar1.setAlpha(currentPhotoIndex == 0 ? 1.0f : 0.35f);
-            indicatorBar2.setAlpha(currentPhotoIndex == 1 ? 1.0f : 0.35f);
-            indicatorBar3.setAlpha(currentPhotoIndex >= 2 ? 1.0f : 0.35f);
+            if (indicatorBar1 != null) indicatorBar1.setAlpha(currentPhotoIndex == 0 ? 1.0f : 0.35f);
+            if (indicatorBar2 != null) indicatorBar2.setAlpha(currentPhotoIndex == 1 ? 1.0f : 0.35f);
+            if (indicatorBar3 != null) indicatorBar3.setAlpha(currentPhotoIndex >= 2 ? 1.0f : 0.35f);
         }
     }
 
@@ -309,45 +257,6 @@ public class DiscoveryFragment extends Fragment {
             // Reached last photo -> open detail view
             openProfileDetail();
         }
-    }
-
-    private void passProfile() {
-        if (filteredProfiles == null || filteredProfiles.isEmpty()) return;
-
-        UserProfile profile = filteredProfiles.get(currentProfileIndex % filteredProfiles.size());
-        Toast.makeText(getContext(), "Đã bỏ qua " + profile.getName(), Toast.LENGTH_SHORT).show();
-
-        nextProfile();
-    }
-
-    private void superLikeProfile() {
-        if (filteredProfiles == null || filteredProfiles.isEmpty()) return;
-
-        UserProfile profile = filteredProfiles.get(currentProfileIndex % filteredProfiles.size());
-        Toast.makeText(getContext(), "⭐ Đã gửi Super Like cho " + profile.getName() + "!", Toast.LENGTH_SHORT).show();
-
-        nextProfile();
-    }
-
-    private void likeProfile() {
-        if (filteredProfiles == null || filteredProfiles.isEmpty()) return;
-
-        UserProfile profile = filteredProfiles.get(currentProfileIndex % filteredProfiles.size());
-        Toast.makeText(getContext(), "💖 It's a Match với " + profile.getName() + "!", Toast.LENGTH_SHORT).show();
-
-        nextProfile();
-    }
-
-    private void nextProfile() {
-        cardProfile.animate()
-                .alpha(0.3f)
-                .setDuration(150)
-                .withEndAction(() -> {
-                    currentProfileIndex++;
-                    displayCurrentProfile();
-                    cardProfile.animate().alpha(1.0f).setDuration(150).start();
-                })
-                .start();
     }
 
     private void openProfileDetail() {

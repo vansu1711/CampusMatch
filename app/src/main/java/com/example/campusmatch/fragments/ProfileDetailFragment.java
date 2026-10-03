@@ -28,7 +28,7 @@ public class ProfileDetailFragment extends Fragment {
     private UserProfile profile;
 
     private ImageView btnBack, ivDetailImage;
-    private TextView tvDetailName, tvDetailMajor, tvBio, labelInterests, labelActivity;
+    private TextView tvDetailName, tvDetailMajor, tvBio, labelInterests, labelActivity, tvPhotoCount;
     private Button btnSendLove;
 
     private View detailIndicatorBar1, detailIndicatorBar2, detailIndicatorBar3;
@@ -68,6 +68,7 @@ public class ProfileDetailFragment extends Fragment {
         tvBio = view.findViewById(R.id.tvBio);
         labelInterests = view.findViewById(R.id.labelInterests);
         labelActivity = view.findViewById(R.id.labelActivity);
+        tvPhotoCount = view.findViewById(R.id.tvPhotoCount);
         btnSendLove = view.findViewById(R.id.btnSendLove);
 
         detailIndicatorBar1 = view.findViewById(R.id.detailIndicatorBar1);
@@ -131,9 +132,14 @@ public class ProfileDetailFragment extends Fragment {
 
             ivDetailImage.setImageResource(photos.get(currentPhotoIndex));
 
-            detailIndicatorBar1.setAlpha(currentPhotoIndex == 0 ? 1.0f : 0.35f);
-            detailIndicatorBar2.setAlpha(currentPhotoIndex == 1 ? 1.0f : 0.35f);
-            detailIndicatorBar3.setAlpha(currentPhotoIndex >= 2 ? 1.0f : 0.35f);
+            if (tvPhotoCount != null) {
+                tvPhotoCount.setText((currentPhotoIndex + 1) + "/" + photos.size());
+            }
+
+            int indicatorSegment = (currentPhotoIndex * 3) / Math.max(photos.size(), 1);
+            if (detailIndicatorBar1 != null) detailIndicatorBar1.setAlpha(indicatorSegment == 0 ? 1.0f : 0.35f);
+            if (detailIndicatorBar2 != null) detailIndicatorBar2.setAlpha(indicatorSegment == 1 ? 1.0f : 0.35f);
+            if (detailIndicatorBar3 != null) detailIndicatorBar3.setAlpha(indicatorSegment >= 2 ? 1.0f : 0.35f);
         }
     }
 

@@ -23,9 +23,35 @@ public class MockDataProvider {
     private static final String KEY_MAJOR = "key_my_major";
     private static final String KEY_BIO = "key_my_bio";
     private static final String KEY_INTERESTS = "key_my_interests";
+    private static final String KEY_CUSTOM_AVATAR = "key_custom_avatar_uri";
+    private static final String KEY_CUSTOM_PHOTO_PREFIX = "key_custom_photo_";
 
     public static List<UserProfile> getSampleProfiles() {
         List<UserProfile> profiles = new ArrayList<>();
+
+        List<Integer> samplePhotos1 = Arrays.asList(
+                R.drawable.bg_gradient,
+                R.drawable.bg_brand_gradient,
+                R.drawable.bg_main_header_gradient,
+                R.drawable.bg_gradient,
+                R.drawable.bg_brand_gradient,
+                R.drawable.bg_main_header_gradient,
+                R.drawable.bg_gradient,
+                R.drawable.bg_brand_gradient,
+                R.drawable.bg_main_header_gradient,
+                R.drawable.bg_gradient
+        );
+
+        List<Integer> samplePhotos2 = Arrays.asList(
+                R.drawable.bg_brand_gradient,
+                R.drawable.bg_gradient,
+                R.drawable.bg_main_header_gradient,
+                R.drawable.bg_brand_gradient,
+                R.drawable.bg_gradient,
+                R.drawable.bg_main_header_gradient,
+                R.drawable.bg_brand_gradient,
+                R.drawable.bg_gradient
+        );
 
         profiles.add(new UserProfile(
                 "p1",
@@ -38,7 +64,7 @@ public class MockDataProvider {
                 Arrays.asList("☕ Cà phê", "🎸 Guitar", "✈️ Du lịch", "📚 Đọc sách"),
                 92,
                 R.drawable.bg_gradient,
-                Arrays.asList(R.drawable.bg_gradient, R.drawable.bg_brand_gradient, R.drawable.bg_gradient),
+                samplePhotos1,
                 true
         ));
 
@@ -53,7 +79,7 @@ public class MockDataProvider {
                 Arrays.asList("🎨 Vẽ tranh", "📷 Ảnh Film", "🎧 Indie Music", "🐱 Yêu mèo"),
                 88,
                 R.drawable.bg_brand_gradient,
-                Arrays.asList(R.drawable.bg_brand_gradient, R.drawable.bg_gradient, R.drawable.bg_brand_gradient),
+                samplePhotos2,
                 true
         ));
 
@@ -68,7 +94,7 @@ public class MockDataProvider {
                 Arrays.asList("🇬🇧 English", "🍜 Ăn uống", "🎬 Xem phim", "🏸 Cầu lông"),
                 95,
                 R.drawable.bg_gradient,
-                Arrays.asList(R.drawable.bg_gradient, R.drawable.bg_brand_gradient, R.drawable.bg_gradient),
+                samplePhotos1,
                 true
         ));
 
@@ -83,7 +109,7 @@ public class MockDataProvider {
                 Arrays.asList("💻 Coding", "🎮 Esport", "🏋️ Gym", "☕ Cà phê"),
                 85,
                 R.drawable.bg_brand_gradient,
-                Arrays.asList(R.drawable.bg_brand_gradient, R.drawable.bg_gradient, R.drawable.bg_brand_gradient),
+                samplePhotos2,
                 false
         ));
 
@@ -98,7 +124,7 @@ public class MockDataProvider {
                 Arrays.asList("🍳 Nấu ăn", "🎙️ Podcast", "🏕️ Cắm trại", "🎶 Pop Music"),
                 90,
                 R.drawable.bg_gradient,
-                Arrays.asList(R.drawable.bg_gradient, R.drawable.bg_brand_gradient, R.drawable.bg_gradient),
+                samplePhotos1,
                 true
         ));
 
@@ -136,9 +162,26 @@ public class MockDataProvider {
         String savedBio = prefs.getString(KEY_BIO, "Xin chào! Mình là sinh viên Bách Khoa, yêu thích công nghệ, lập trình Android và đi cà phê cuối tuần ☕.");
         String rawInterests = prefs.getString(KEY_INTERESTS, "💻 Coding,☕ Cà phê,🎸 Guitar,🏋️ Gym");
 
+        String customAvatar = prefs.getString(KEY_CUSTOM_AVATAR, null);
+        List<String> customPhotos = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            String photoUri = prefs.getString(KEY_CUSTOM_PHOTO_PREFIX + i, null);
+            if (photoUri != null) {
+                customPhotos.add(photoUri);
+            }
+        }
+
         List<String> interestsList = new ArrayList<>(Arrays.asList(rawInterests.split(",")));
 
-        return new UserProfile(
+        List<Integer> myPhotos = Arrays.asList(
+                R.drawable.bg_gradient,
+                R.drawable.bg_brand_gradient,
+                R.drawable.bg_main_header_gradient,
+                R.drawable.bg_gradient,
+                R.drawable.bg_brand_gradient
+        );
+
+        UserProfile profile = new UserProfile(
                 "my_profile_id",
                 savedName,
                 savedAge,
@@ -149,9 +192,16 @@ public class MockDataProvider {
                 interestsList,
                 100,
                 R.drawable.bg_gradient,
-                Arrays.asList(R.drawable.bg_gradient, R.drawable.bg_brand_gradient, R.drawable.bg_gradient),
+                myPhotos,
                 true
         );
+
+        profile.setCustomAvatarUri(customAvatar);
+        if (!customPhotos.isEmpty()) {
+            profile.setCustomPhotoUriList(customPhotos);
+        }
+
+        return profile;
     }
 
     public static void saveMyProfile(Context context, UserProfile profile) {
@@ -164,6 +214,17 @@ public class MockDataProvider {
         editor.putString(KEY_SCHOOL, profile.getSchool());
         editor.putString(KEY_MAJOR, profile.getMajor());
         editor.putString(KEY_BIO, profile.getBio());
+
+        if (profile.getCustomAvatarUri() != null) {
+            editor.putString(KEY_CUSTOM_AVATAR, profile.getCustomAvatarUri());
+        }
+
+        if (profile.getCustomPhotoUriList() != null) {
+            List<String> photos = profile.getCustomPhotoUriList();
+            for (int i = 0; i < Math.min(photos.size(), 10); i++) {
+                editor.putString(KEY_CUSTOM_PHOTO_PREFIX + i, photos.get(i));
+            }
+        }
 
         if (profile.getInterests() != null && !profile.getInterests().isEmpty()) {
             StringBuilder sb = new StringBuilder();

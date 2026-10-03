@@ -120,6 +120,10 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                // Lưu tài khoản vào SQLite Database
+                com.example.campusmatch.data.CampusMatchDbHelper dbHelper = new com.example.campusmatch.data.CampusMatchDbHelper(RegisterActivity.this);
+                dbHelper.registerUser(username, password);
+
                 // Lưu thông tin tài khoản vừa tạo vào bộ nhớ tạm cầu nối dữ liệu
                 UserDataBridge.registeredUsername = username;
                 UserDataBridge.registeredPassword = password;
